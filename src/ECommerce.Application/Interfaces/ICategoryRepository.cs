@@ -8,6 +8,6 @@ namespace ECommerce.Application.Interfaces
         Task<IReadOnlyList<Category>> GetAllAsync(CancellationToken ct = default);
         Task AddAsync(Category category, CancellationToken ct = default);
         Task UpdateAsync(Category category, CancellationToken ct = default);
-
+        Task<bool> ExistsByNameAsync(string name, Guid? excludeId = default, CancellationToken ct = default);
     }
 }

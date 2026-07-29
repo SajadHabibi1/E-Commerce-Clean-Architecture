@@ -28,5 +28,11 @@ namespace ECommerce.Tests.Fakes
         {
             return Task.CompletedTask;
         }
+
+        public Task<bool> ExistsByNameAsync(string name, Guid? excludeId = default, CancellationToken ct = default)
+        {
+            var category = Categories.Any(c => c.Name == name && (excludeId == null || c.Id != excludeId));
+            return Task.FromResult(category);
+        }
     }
 }

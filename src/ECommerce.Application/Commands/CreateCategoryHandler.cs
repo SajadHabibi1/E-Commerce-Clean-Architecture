@@ -17,6 +17,11 @@ namespace ECommerce.Application.Commands
         public async Task<Result<Guid>> HandleAsync(CreateCategoryCommand cmd, CancellationToken ct = default)
         {
             ArgumentNullException.ThrowIfNull(cmd);
+            
+            if (await _categoryRepository.ExistsByNameAsync(cmd.Name, ct: ct))
+            {
+                return Result<Guid>.Failure("Category name already exists");
+            }
 
             try
             {

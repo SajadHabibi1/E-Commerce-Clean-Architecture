@@ -1,3 +1,4 @@
+using System.Data.Common;
 using ECommerce.Application.Interfaces;
 using ECommerce.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +36,12 @@ namespace ECommerce.Infrastructure.Persistence.Repositories
         {
             _context.Categories.Update(category);
             await _context.SaveChangesAsync(ct);
+        }
+
+        public async Task<bool> ExistsByNameAsync(string name, Guid? excludeId = default, CancellationToken ct = default)
+        {
+            return await _context.Categories
+            .AnyAsync(c => c.Name == name && (excludeId == null || c.Id != excludeId), ct);
         }
     }
 }

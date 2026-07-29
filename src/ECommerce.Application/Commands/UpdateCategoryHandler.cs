@@ -31,6 +31,11 @@ namespace ECommerce.Application.Commands
                     return Result<Guid>.NotFound("Category not found");
                 }
 
+                if (await _categoryRepository.ExistsByNameAsync(cmd.Name, cmd.Id, ct))
+                {
+                    return Result<Guid>.Failure("Category name already exists");
+                }
+
                 category.Edit(
                     cmd.Name,
                     cmd.Description

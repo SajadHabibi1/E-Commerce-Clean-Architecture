@@ -14,6 +14,10 @@ namespace ECommerce.Infrastructure.Persistence.Configurations
             .IsRequired()
             .HasMaxLength(100);
 
+            builder.HasIndex(c => c.Name)
+            .IsUnique()
+            .HasFilter("[IsDeleted] = 0");
+
             builder.Property(c => c.Description)
             .HasMaxLength(250);
 

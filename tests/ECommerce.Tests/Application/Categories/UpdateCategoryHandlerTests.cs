@@ -72,5 +72,64 @@ namespace ECommerce.Tests.Application.Categories
             // Assert
             Assert.True(result.IsFailure);
         }
+
+        [Fact]
+        public async Task HandleAsync_ShouldReturnFailure_WhenAnotherCategoryHasTheName()
+        {
+            // Arrange
+            var respository = new FakeCategoryRepository();
+
+            var category1 = new Category(
+                "Electronic",
+                ""
+            );
+            await respository.AddAsync(category1);
+
+            var category2 = new Category(
+                "Pc",
+                ""
+            );
+            await respository.AddAsync(category2);
+
+            var handler = new UpdateCategoryHandler(respository);
+
+            var cmd = new UpdateCategoryCommand(
+                category2.Id,
+                "Electronic",
+                ""
+            );
+
+            // Act
+            var result = await handler.HandleAsync(cmd);
+
+            // Assert
+            Assert.True(result.IsFailure);
+        }
+
+        [Fact]
+        public async Task HandleAsync_ShouldSucceed_WhenUpdatingWithoutChangingName()
+        {
+            // Arrange
+            var repository = new FakeCategoryRepository();
+            var category = new Category(
+                "Electronic",
+                ""
+            );
+            await repository.AddAsync(category);
+
+            var handler = new UpdateCategoryHandler(repository);
+
+            var cmd = new UpdateCategoryCommand(
+                category.Id,
+                "Electronic",
+                "Electronic stuff"
+            );
+
+            // Act
+            var result = await handler.HandleAsync(cmd);
+
+            // Assert
+            Assert.True(result.IsSuccess);
+        }
     }
 }
