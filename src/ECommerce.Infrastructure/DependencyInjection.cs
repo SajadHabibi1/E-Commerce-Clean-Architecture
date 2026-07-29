@@ -18,6 +18,7 @@ namespace ECommerce.Infrastructure
             options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
 
             return services;
         }

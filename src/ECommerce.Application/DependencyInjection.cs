@@ -14,6 +14,12 @@ namespace ECommerce.Application
             services.AddScoped<UpdateProductHandler>();
             services.AddScoped<DeleteProductHandler>();
 
+            services.AddScoped<CreateCategoryHandler>();
+            services.AddScoped<GetAllCategoriesHandler>();
+            services.AddScoped<GetCategoryByIdHandler>();
+            services.AddScoped<UpdateCategoryHandler>();
+            services.AddScoped<DeleteCategoryHandler>();
+
             return services;
         }
     }
