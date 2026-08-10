@@ -17,6 +17,8 @@ namespace ECommerce.Domain.Entities
         public DateTime? UpdatedAt { get; private set; }
         public DateTime? DeletedAt { get; private set; }
 
+        private Customer() { }
+
         public Customer(string firstName, string lastName, string email, string? phoneNumber, Address? address)
         {
             var trimmedFirstName = firstName.Trim();
