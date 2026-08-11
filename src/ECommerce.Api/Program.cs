@@ -24,4 +24,6 @@ app.MapProductsEndpoints();
 
 app.MapCategoriesEndpoints();
 
+app.MapCustomersEndpoints();
+
 app.Run();
