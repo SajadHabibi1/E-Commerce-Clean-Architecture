@@ -20,6 +20,7 @@ namespace ECommerce.Infrastructure
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<ICartRepository, CartRepository>();
 
             return services;
         }
