@@ -117,5 +117,82 @@ namespace ECommerce.Tests.Domain
             Assert.Throws<DomainException>(() =>
             cart.RemoveItem(Guid.NewGuid()));
         }
+
+        [Fact]
+        public void ChangeItemQuantity_ShouldUpdateQuantity_WhenItemExists()
+        {
+            // Arrange
+            var customerId = Guid.NewGuid();
+            var cart = new Cart(customerId);
+
+            var item = new CartItem(
+                cart.Id,
+                Guid.NewGuid(),
+                10,
+                1000
+            );
+            cart.AddItem(item);
+
+            // Act
+            cart.ChangeItemQuantity(item.Id, 5);
+
+            // Assert
+            Assert.Equal(5, item.Quantity);
+            Assert.NotNull(cart.UpdatedAt);
+        }
+
+        [Fact]
+        public void ChangeItemQuantity_ShouldRecalculateTotalAmount_WhenQuantityChanges()
+        {
+            // Arrange
+            var customerId = Guid.NewGuid();
+            var cart = new Cart(customerId);
+
+            var item = new CartItem(
+                cart.Id,
+                Guid.NewGuid(),
+                10,
+                1000
+            );
+            cart.AddItem(item);
+
+            // Act
+            cart.ChangeItemQuantity(item.Id, 3);
+
+            // Assert
+            Assert.Equal(3000, cart.TotalAmount);
+        }
+
+        [Fact]
+        public void ChangeItemQuantity_ShouldThrowException_WhenItemDoesNotExist()
+        {
+            // Arrange
+            var customerId = Guid.NewGuid();
+            var cart = new Cart(customerId);
+
+            // Act & Assert
+            Assert.Throws<DomainException>(() =>
+            cart.ChangeItemQuantity(Guid.NewGuid(), 5));
+        }
+
+        [Fact]
+        public void ChangeItemQuantity_ShouldThrowException_WhenQuantityIsZeroOrNegative()
+        {
+            // Arrange
+            var customerId = Guid.NewGuid();
+            var cart = new Cart(customerId);
+
+            var item = new CartItem(
+                cart.Id,
+                Guid.NewGuid(),
+                10,
+                1000
+            );
+            cart.AddItem(item);
+
+            // Act & Assert
+            Assert.Throws<DomainException>(() =>
+            cart.ChangeItemQuantity(item.Id, 0));
+        }
     }
 }
