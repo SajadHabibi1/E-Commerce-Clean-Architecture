@@ -60,5 +60,19 @@ namespace ECommerce.Domain.Entities
             CalculateAmount();
             UpdatedAt = DateTime.UtcNow;
         }
+
+        public void ChangeItemQuantity(Guid cartItemId, int quantity)
+        {
+            var item = _cartItems.FirstOrDefault(i => i.Id == cartItemId);
+
+            if (item == null)
+            {
+                throw new DomainException("CartItem not found");
+            }
+            item.ChangeQuantity(quantity);
+
+            CalculateAmount();
+            UpdatedAt = DateTime.UtcNow;
+        }
     }
 }
