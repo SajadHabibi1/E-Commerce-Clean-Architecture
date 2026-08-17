@@ -26,4 +26,6 @@ app.MapCategoriesEndpoints();
 
 app.MapCustomersEndpoints();
 
+app.MapCartsEndpoints();
+
 app.Run();
