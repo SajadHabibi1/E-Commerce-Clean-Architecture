@@ -74,5 +74,12 @@ namespace ECommerce.Domain.Entities
             CalculateAmount();
             UpdatedAt = DateTime.UtcNow;
         }
+
+        public void Clear()
+        {
+            _cartItems.Clear();
+            CalculateAmount();
+            UpdatedAt = DateTime.UtcNow;
+        }
     }
 }
