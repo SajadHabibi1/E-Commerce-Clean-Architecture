@@ -1,3 +1,4 @@
+using ECommerce.Application.DTOs;
 using ECommerce.Application.Queries;
 using ECommerce.Domain.Entities;
 using ECommerce.Tests.Fakes;
@@ -18,7 +19,9 @@ namespace ECommerce.Tests.Application.Categories
 
             // Assert
             Assert.True(result.IsSuccess);
-            Assert.Empty(result.Value);
+
+            var categories = Assert.IsAssignableFrom<IReadOnlyList<CategoryDto>>(result.Value);
+            Assert.Empty(categories);
         }
 
         [Fact]
@@ -40,9 +43,13 @@ namespace ECommerce.Tests.Application.Categories
 
             // Assert
             Assert.True(result.IsSuccess);
-            Assert.NotEmpty(result.Value);
-            Assert.Single(result.Value!);
 
+            var categories = Assert.IsAssignableFrom<IReadOnlyList<CategoryDto>>(result.Value);
+
+            var returnedCategory = Assert.Single(categories);
+
+            Assert.Equal(category.Id, returnedCategory.Id);
+            Assert.Equal(category.Name, returnedCategory.Name);
         }
     }
 }
