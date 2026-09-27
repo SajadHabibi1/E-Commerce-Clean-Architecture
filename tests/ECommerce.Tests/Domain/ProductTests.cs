@@ -455,5 +455,24 @@ namespace ECommerce.Tests.Domain
             Assert.Throws<ProductOutOfStockException>(() =>
             product.ReduceStock(3));
         }
+
+        [Fact]
+        public void ReduceStock_ShouldRejectNegativeQuantity_WithoutChangingStock()
+        {
+            // Arrange
+            var product = new Product(
+                Guid.NewGuid(),
+                "Laptop",
+                "Gaming laptop",
+                "ART-001",
+                "laptop.jpg",
+                new Money(1000m, "SEK"),
+                10
+            );
+
+            // Act & Assert
+            Assert.Throws<DomainException>(() => product.ReduceStock(-1));
+            Assert.Equal(10, product.StockQuantity);
+        }
     }
 }

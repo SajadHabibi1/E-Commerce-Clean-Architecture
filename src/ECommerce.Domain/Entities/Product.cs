@@ -141,6 +141,11 @@ namespace ECommerce.Domain.Entities
         {
             EnsureNotDeleted();
 
+            if (quantity < 0)
+            {
+                throw new DomainException("Quantity cannot be negative");
+            }
+
             if (quantity > StockQuantity)
             {
                 throw new ProductOutOfStockException($"Not enough stock for product '{Name}'. Requested: {quantity}, available: {StockQuantity}");
