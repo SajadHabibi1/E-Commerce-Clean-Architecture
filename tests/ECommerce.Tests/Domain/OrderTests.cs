@@ -80,7 +80,7 @@ namespace ECommerce.Tests.Domain
             // Arrange
             var customerId = Guid.NewGuid();
             var orderNumber = "ORD-001";
-            Address? shippingAddress = null;
+            Address shippingAddress = null!;
             var billingAddress = new Address("Storgatan 1", "Stockholm", "11122", "Sweden");
 
             // Act & Assert
@@ -100,7 +100,7 @@ namespace ECommerce.Tests.Domain
             var customerId = Guid.NewGuid();
             var orderNumber = "ORD-001";
             var shippingAddress = new Address("Storgatan 1", "Stockholm", "11122", "Sweden");
-            Address? billingAddress = null;
+            Address billingAddress = null!;
 
             // Act & Assert
             Assert.Throws<DomainException>(() =>

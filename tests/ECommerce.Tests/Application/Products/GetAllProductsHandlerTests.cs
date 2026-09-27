@@ -1,3 +1,4 @@
+using ECommerce.Application.DTOs;
 using ECommerce.Application.Queries;
 using ECommerce.Domain.Entities;
 using ECommerce.Domain.ValueObjects;
@@ -21,7 +22,9 @@ namespace ECommerce.Tests.Application.Products
 
             // Assert
             Assert.True(result.IsSuccess);
-            Assert.Empty(result.Value);
+
+            var products = Assert.IsAssignableFrom<IReadOnlyList<ProductDto>>(result.Value);
+            Assert.Empty(products);
         }
 
         [Fact]
@@ -60,10 +63,12 @@ namespace ECommerce.Tests.Application.Products
 
             // Assert
             Assert.True(result.IsSuccess);
-            Assert.NotEmpty(result.Value);
-            Assert.Equal(2, result.Value!.Count);
-            Assert.Equal("Laptop", result.Value[0].Name);
-            Assert.Equal("Mouse", result.Value[1].Name);
+
+            var products = Assert.IsAssignableFrom<IReadOnlyList<ProductDto>>(result.Value);
+            Assert.NotEmpty(products);
+            Assert.Equal(2, products.Count);
+            Assert.Equal("Laptop", products[0].Name);
+            Assert.Equal("Mouse", products[1].Name);
         }
     }
 }
